@@ -28,6 +28,7 @@ public class RecyclerFragment extends Fragment implements OnRecyclerListener {
 
     @Override
     public void onAttach(Context context) {
+        Log.d("init", "runOnAttach");
         super.onAttach(context);
         if (!(context instanceof RecyclerFragmentListener)) {
             throw new UnsupportedOperationException(
@@ -41,17 +42,12 @@ public class RecyclerFragment extends Fragment implements OnRecyclerListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d("init", "initOnCreateView");
-        LinearLayoutManager llm = new LinearLayoutManager(mContext);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(llm);
-        mRecyclerView.setAdapter(mAdapter);
-        mView = inflater.inflate(R.layout.main_activity, container, false);
+        // RecyclerViewの参照を取得
+        mView = inflater.inflate(R.layout.fragment, container, false);
+        mRecyclerView = (RecyclerView) mView.findViewById(R.id.recycler_fragment);
 
         // レイアウトマネージャを設定(ここで縦方向の標準リストであることを指定)
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        // RecyclerViewの参照を取得
-        mRecyclerView = (RecyclerView) mView.findViewById(R.id.recycler_fragment);
-
 
         return mView;
     }
