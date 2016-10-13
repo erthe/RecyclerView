@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerFragment fragment = new RecyclerFragment();
 
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add( R.id.recycler_fragment, fragment, "test" );
+        transaction.add(R.id.main_content, fragment, "test");
         transaction.commit();
 
     }

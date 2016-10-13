@@ -14,7 +14,6 @@ import android.util.Log;
 
 public class RecyclerFragment extends Fragment implements OnRecyclerListener {
 
-    private Context mContext = null;
     private View mView;
     private RecyclerFragmentListener mFragmentListener = null;
 
@@ -35,22 +34,24 @@ public class RecyclerFragment extends Fragment implements OnRecyclerListener {
         } else {
             mFragmentListener = (RecyclerFragmentListener) context;
         }
-        mContext = context;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d("init", "initOnCreateView");
-        LinearLayoutManager llm = new LinearLayoutManager(mContext);
+
+        mView = inflater.inflate(R.layout.recycler_fragment, container, false);
+
+        // RecyclerViewの参照を取得
+        mRecyclerView = (RecyclerView) mView.findViewById(R.id.recycler_fragment);
+
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
         mRecyclerView.setAdapter(mAdapter);
-        mView = inflater.inflate(R.layout.main_activity, container, false);
 
         // レイアウトマネージャを設定(ここで縦方向の標準リストであることを指定)
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        // RecyclerViewの参照を取得
-        mRecyclerView = (RecyclerView) mView.findViewById(R.id.recycler_fragment);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
         return mView;
@@ -69,7 +70,7 @@ public class RecyclerFragment extends Fragment implements OnRecyclerListener {
 
         // この辺りはListViewと同じ
         // 今回は特に何もしないけど、一応クリック判定を取れる様にする
-        mAdapter = new RecyclerAdapter(mContext, array, this);
+        mAdapter = new RecyclerAdapter(getActivity(), array, this);
         mRecyclerView.setAdapter(mAdapter);
     }
 
